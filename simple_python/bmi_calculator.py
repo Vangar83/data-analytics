@@ -1,4 +1,4 @@
-#BMI calculator
+#My very fist program in Python a simple BMI calculator
 
 name = 'Vangar'
 height_m = 1.83
