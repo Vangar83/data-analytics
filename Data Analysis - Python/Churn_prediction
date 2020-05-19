@@ -48,8 +48,8 @@ for column in cleaned_df.columns:
 
 
 
-#Split the data into 80% training and 20% testing
-x_train, x_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 42)
+#Split the data into 70% training and 30% testing
+x_train, x_test, y_train, y_test = train_test_split(X, y, test_size = 0.3, random_state = 42)
 
 #create a model
 model = LogisticRegression()
