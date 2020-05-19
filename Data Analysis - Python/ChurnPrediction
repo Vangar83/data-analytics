@@ -1,0 +1,61 @@
+import pandas as pd
+import numpy as np
+import sklearn
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.preprocessing import LabelEncoder
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import classification_report
+from sklearn.linear_model import LogisticRegression
+
+
+#Load the data with google's library
+from google.colab import files
+uploaded = files.upload()
+
+df = pd.read_csv('Customers.csv')
+df.head()
+
+df['Churn'].value_counts()
+
+#visualise the customer count churn
+sns.countplot(df['Churn'])
+
+#percentage of customers that are leaving
+num_stayed = df[df.Churn == 'No'].shape[0]
+num_churned = df[df.Churn == 'Yes'].shape[0]
+
+print (num_stayed / (num_stayed + num_churned)*100, '% Stayed')
+print (num_churned / (num_stayed + num_churned)*100, '% Left')
+
+#visualise churn per gender
+sns.countplot(x='Gender', hue='Churn', data=df)
+#visualise by geography
+sns.countplot(x='Geography', hue='Churn', data=df)
+
+numerical_features = ['Tenure', 'CreditScore']
+fig, ax = plt.subplots(1, 2, figsize=(28,8))
+df[df.Churn == 'No'][numerical_features].hist(bins=30, color = 'blue', alpha=0.5, ax=ax)
+df[df.Churn == 'Yes'][numerical_features].hist(bins=30, color = 'red', alpha=0.5, ax=ax)
+
+#Convert all the non-mumeric columns to numeric
+for column in cleaned_df.columns:
+  if cleaned_df[column].dtype == np.number:
+    continue
+  cleaned_df[column] = LabelEncoder().fit_transform(cleaned_df[column])
+
+
+#Split the data into 70% training and 30% testing
+x_train, x_test, y_train, y_test = train_test_split(X, y, test_size = 0.3, random_state = 40)
+
+#create a model
+model = LogisticRegression()
+#Train the model
+model.fit(x_train, y_train)
+
+#create predictions on the test data
+predictions = model.predict(x_test)
+
+#print the predictions
+print(predictions)
+
